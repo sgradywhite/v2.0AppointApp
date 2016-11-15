@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery Show Hide Using Select Box</title>
+<style type="text/css">
+    .box{
+        padding: 20px;
+        display: none;
+        margin-top: 20px;
+        border: 1px solid #000;
+    }
+    .Allergy{ background: #ffffff; }
+    .BackProblems{ background: #ffffff; }
+    .C{ background: #ffffff; }
+</style>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#specialty').on('change', function(){
+            var s = document.getElementById('specialty');
+            var specialty = s.options[s.selectedIndex].value;
+            
+            var textvalz = s.options[s.selectedIndex].text
+            var count = 0;
+            
+                    
+                if(textvalz == "BackProblems"){
+                $(".box").not(".BackProblems").hide();
+                $(".BackProblems").show();
+                }
+                
+                else if(textvalz == "Allergy"){
+                $(".box").not(".Allergy").hide();
+                $(".Allergy").show();
+                }
+                
+                
+                
+            
+            
+            });
+        });
+      </script>
+      
+       
+    <script type="text/javascript">
+    function submitappoint(abc) {
+     
+    sessionStorage.setItem("sent", abc.id );
+    
+    
+    window.open('confirmappointment.html',  "_self")
+    var spec = prompt("Thank you for selecting your appointment", "yes")
+    
+    }
+    
+    
+    </script>
+    
+
+
+</head>
+<body>
+    <div>
+        
+    </div>
+    <div>
+      
+        <option>Search for Specialty:</option>
+        
+        <%= select_tag(:specialty, options_for_select(@user_options), { include_blank: true })  %>
+    </div>
+    
+   
+    
+    <div class="Allergy box"><h1> Doctor Appointment for Allergy</h1>
+    
+  
+
+         
+                    <div class = "appointmentbackground" >     
+                    
+                    <% @allergys.each do |appointment| %>
+                            <% if appointment.status != "Pending" %> 
+                            <button onclick="submitappoint(this)" class = "buttonappointment" id= <%= appointment.id %> >       
+                            <option><label name = "id">ID: <%= appointment.id %></label> <label>Date:  <%= appointment.date %></label><label > <%= appointment.firstname %></label>
+                            <%= appointment.lastname %> <%= appointment.specialty %></option ></button > 
+                            <% end %>
+                            
+                    <% end %>
+                  
+                    
+                    </div>
+                    
+                   
+                    <p id="demo"></p>
+        
+        </div>
+        
+        
+    <div class="BackProblems box"><h1> Doctor Appointment for BackProblems </h1>
+        
+                
+                    <div class = "appointmentbackground" >  
+                    
+                    <% @backproblems.each do |appointment| %>
+                        <% if appointment.status != "Pending" %> 
+                            <button onclick="submitappoint(this)" class = "buttonappointment" id= <%= appointment.id %> >       
+                            <option><label name = "id">ID: <%= appointment.id %></label> <label>Date:  <%= appointment.date %></label><label > <%= appointment.firstname %></label>
+                            <%= appointment.lastname %> <%= appointment.specialty %></option ></button > 
+                            <% end %>
+                    <% end %>
+                    
+                     </div>
+                
+    </div>
+    <div class="C box"><h1> Hello World </h1>You have selected <strong>blue option</strong> so i am here</div>
+    
+</body>
+</html>
